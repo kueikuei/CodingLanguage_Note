@@ -43,6 +43,10 @@ Please don't use any `<blink>` tags.
 ![Loading Fail](https://s.yimg.com/xd/api/res/1.2/KW6nW59qHyWajAlXlAliDA--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD00MDA7cT04NTtyb3RhdGU9YXV0bzt3PTQwMA--/http://nevec-img.zenfs.com/prod/tw_ec05-7/5351ef81-1b6c-4422-ba01-d051d8a72607.jpg)
 ![Loading Fail](http://img2.a0bi.com/upload/ttq/20150301/1425192535736.jpg "doramon")
 
+####超連結測試
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+
+
 
 
 
