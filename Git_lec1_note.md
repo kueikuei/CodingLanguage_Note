@@ -37,7 +37,8 @@ pwd: print working directory
 git init:控管此路徑下檔案  
 ls -a:呼叫出所有路徑下檔案(包含隱藏檔案)  
 git add:加入追蹤對象  
-git commit -m"message":真正開始控管
+git commit -m"message":真正開始控管。message越詳細越好。  
+git log:記錄每一筆commit
 
 
 
