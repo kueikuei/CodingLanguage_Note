@@ -20,6 +20,27 @@ staging_area暫存區：只有放在裡頭的檔案才能進行commit，一定�
 *--soft 代表銷毀 commit 但是保留 commit 內容*
 *HEAD^ 代表上一個 commit (版本)*
 #####git reset --soft HEAD^
+推到雲端時不被接受 
+####git push origin master --force
+*強行毀掉遠端的commit存入local的commit*
+
+不破壞原本commit並進行現存commit的更改  
+#####git commit --amend  
+原本commit的其他功能  
+$ git commit --amend --no-edit
+推到雲端時仍不被接受  
+原因：即便是同一個commit但是內容不同仍然不給上傳  
+git push origin master --force
+
+######把commit直接銷毀  
+soft毀掉commit但是內容還在
+hard不只commit還會把內容檔案都刪除
+
+
+
+
+
+
 
 
 
