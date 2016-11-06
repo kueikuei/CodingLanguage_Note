@@ -38,7 +38,9 @@ git init:控管此路徑下檔案
 ls -a:呼叫出所有路徑下檔案(包含隱藏檔案)  
 git add:加入追蹤對象  
 git commit -m"message":真正開始控管。message越詳細越好。  
-git log:記錄每一筆commit
+git remote add origin "你的遠端 git 儲存庫位置"  
+git push origin mater:推上雲端 
+git log:記錄每一筆commit，檢視 commit 是否成功
 
 
 
