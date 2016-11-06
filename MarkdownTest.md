@@ -46,6 +46,12 @@ Please don't use any `<blink>` tags.
 ####超連結測試
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
+###表格呈現
+| git 指令       | 功能              |
+| ------------- |:----------------:|
+| git add       | 把檔案放置 staging |
+| git commit    | 把 staged 檔案放置 |
+| git status    |                  |
 
 
 
