@@ -36,6 +36,21 @@ git push origin master --force
 soft毀掉commit但是內容還在
 hard不只commit還會把內容檔案都刪除
 
+#####[建立分支]  
+*平行世界*
+####git checkout 我要切換到的分支名稱
+master:主幹，測試完的程式(正式版本)
+branck:枝幹
+git push origin HEAD
+
+
+
+
+
+
+
+
+
 
 
 
