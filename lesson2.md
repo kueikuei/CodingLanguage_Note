@@ -5,3 +5,6 @@
 | git add       | 把檔案放置 staging |
 | git commit    | 把 staged 檔案放置 |
 | git status    |                  |
+
+
+vvvvf
