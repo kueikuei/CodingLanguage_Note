@@ -32,7 +32,7 @@ win:git cm windows
 mkdir: make directory  
 cd: change directory  
 pwd: print working directory 
-
+clear:清屏
 ####git指令說明
 git init:控管此路徑下檔案  
 ls -a:呼叫出所有路徑下檔案(包含隱藏檔案)  
