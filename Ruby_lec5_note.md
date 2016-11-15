@@ -1,26 +1,46 @@
 ----------------lec5------------------
 
-#作業講解
+####作業講解
 4.找出array中非字串
 [].select(|x|x [].class != String)
-
 
 6.arr = [1,2,3,3].uniq
 => [1,2,3] 但保留原始 arr
 [1,2,3,4].uniq!
 => [1,2,3] 不保留原始 arr
 
-#MVC 架構
+*小知識*
+```ruby
+arr = [1,2,3,3].uniq! #arr = [1,2,3]
+#!放後面會改變原本的值  
+```
+
+**ruby方法能加?或!**  
+>清楚告訴使用者大概會回傳怎樣的值  
+>?回傳boolean;!代表值會改變
+
+
+###MVC 架構
 1. Model 封裝資料與商業邏輯，與資料庫裡的資料表對應
 2. View 處理使用者介面，顯示及編輯表單，可內嵌Ruby語法
 3. Controller 負責將資料送進送出Model，處理從外界 (也就是瀏覽器) 來的HTTP Request請求，與Model互動後輸出View (也就是HTML)
 
 ＃早期網頁都沒有JS，透過php夾雜在html裡頭去做邏輯判斷與資料庫連結
 ＃rails的view特別之處在於能嵌入ruby程式碼
-＃桌機跟網路服務差別，網頁不會自動跟新資料(http協定)
+＃桌機跟網路MVC差別，網頁不會自動跟新資料(http協定)
 ＃後端(controller & model)
 ＃controller決定要CRUD哪個動作，根據路由(Routing)規則決定派往哪一個Controller
- 的 Action，類似於MEAN的app.js
+ 的 Action，類似於MEAN的app.js  
+
+##Rails MVC 架構
+![Loading Fail](https://ihower.tw/rails/images/basic-mvc-diagram.png "rails mvc")  
+1. 瀏覽器發出HTTP request請求給Rails  
+2. 路由(Routing)根據規則決定派往哪一個Controller 的 Action  
+3. 負責處理的 Controller Action 操作 Model 資料
+4. Model 存取資料庫或資料處理  
+5. Controller Action 將得到的資料餵給View樣板  
+6. 回傳最後的 HTML 成品給瀏覽器
+
 
 Model File
 和資料庫的資料表相對應的抽象類別，和其他資料表的關聯、行為、商業邏輯等
@@ -35,49 +55,131 @@ Controller File主要的功能：
 3. 回傳 response 結果
 
 
-#rails scaffold 訂便當系統
-＊db:migrate 自動產生資料表
-＊http://localhost:3000/rails/info/routes=>routes所有介紹
-＊routes.rb此專案最主要的檔案，http請求後給予相對應回應檔案，Rails 專案的路由
-都是在這裡設定
-＊取資料get 產生資料post
-＊任何一個controller都是class
-＊[model]
-skinny constroller, fat model
-商業邏輯該放哪？ruby習慣放在model，con越小越好，處理CRUD就好
-＊ruby的html為.erb，代表可以嵌入ruby語言的html
+###rails scaffold 訂便當系統
 
+**scaffold鷹架指令：**
+```terminal
+$rails g scaffold order name:string phone:string description:text
+```
+
+**scaffold做了什麼？**  
+>產生諸多CRUD新檔案
+>>網頁運作，就是把CRUD URL與背後邏輯實做出來   
+>routes.rb  
+>>resource:orders  
+>>>自動產生整個CRUD function  
+>>>>觀念:
+>>>>>post跟new綁在一起  
+>>>>>edit跟update綁在一起     
+![Loading Fail](http://www.weijieworld.com/wp-content/uploads/2015/02/screen-shot-2015-02-24-at-4-02-00-pm.png"rails CRUD")
+
+**rails routes URL 定義**  
+**route file**
+```ruby
+#route
+get 'orders/index' => 'order#index'
+
+#controller
+def index
+    @order=Order.all
+end
+```
+＊routes.rb為專案最主要的檔案，http請求後給予相對應回應檔案，Rails 專案的路由
+都是在這裡設定  
+＊routes info:http://localhost:3000/rails/info/routes  
+>也可在 terminal 裡輸入 rake routes 查詢
+
+＊取資料get 產生資料post
+
+**controller file**
+**controller功能**
+1. 收集 http request 的資訊，例如:使用者傳進來的參數  
+2. 操作 Model 來做資料的處理  
+3. 回傳 response 結果  
+
+繼承ApplicationController
+ 
+**modelfile**
+**model功能**  
+和資料庫的資料表相對應的抽象類別，和其他資料表的關聯、行為、商業邏輯等都是在這裡定義或處理
+
+**Active Record**
+>翻譯官:Ruby的ORM(對映射關聯式資料與物件資料)
+>>SQL<->ruby
+**把data table物件化，讓開發者不須使用SQL語法，直接用熟悉的Ruby語法操作資料**
+>order table經過ActiveRecord後是一個class
+
+| CRUD      |          功能           |
+|-----------|:----------------------:|
+| CREATE    |         新增資料         |
+| READ      |         讀取資料         |
+| UPDATE    |         編輯資料         |
+| DELETE    |         刪除資料         |
+
+CREATE  -  Order.create(name: "Bob", description: "hamburger")
+READ    -  讀取資料
+UPDATE  - Order.find(1).update(description: "sandwich")
+DELETE  - Order.find(1).destroy
+
+**rail console**
+>類似irb，不過只屬於rails專案的環境
+>**可在裡面測試 ActiveRecord**
+>>$rails console
+>>>Order.all
+>>>Order.all.find()
+
+*skinny constroller, fat model*
+>商業邏輯該放哪？ruby習慣放在model，controller越小越好，處理CRUD就好
+
+**html.erb file**
+＊ruby的html為.erb，代表可以嵌入ruby語言的html
+```ruby
+#controller
+def index
+    @order=Order.all
+end
+
+#html.erb
+<tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= order.phone %></td>
+        <td><%= link_to 'Show', order %></td>
+        <td><%= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+</tbody>
+```
 
 $bundle install 
 => 確保相關package安裝，並且不用再裝舊或新pcakage版本
 => 類似MEAN的npm install
 gem.file 紀錄需要的package 類似node 的.json檔
 
-#rails 專案步驟
-1. $rails new "my_app_name"
-2. 安裝執行這個專案需要的 gem: $ bundle install
+###rails 專案建立步驟
+1. $rails new "my_app_name"  
+2. 安裝執行這個專案需要的gem: $ bundle install  
+  
+rails framwork也是由其他諸多framwork共同建立起來  
+必須要depend on其他套件=>由GemFile記錄=>$bundle install  
+>What is bundler?  
+>>Gem依存性(dependencies)管理工具
+會根據 Gemfile 的設定自動下載及安裝 Gem 套件
+在團隊開發時，維持開發者之間套件版本的一致性
 
-#拿到一個專案先看三個檔案(Rails 專案裡一些重要的設定檔)
-config/database.yml => rube預設是sqlite資料庫，輕量化版本的資料庫，也避免遇到環境難建立的
-config/routes.rb => 看有哪些功能(function)
-Gemfile => dependency
+#####Rails 專案裡一些重要的設定檔
+config/database.yml => ruby預設是sqlite資料庫，輕量化版本的資料庫，避免遇到麻煩的環境設定
+>gem sqlite3:rails跟sqllite的接口
 
-#Active Record
-把資料表物件化，讓開發者不須使用 SQL 語法，直接用熟悉的 Ruby 於法操作資料
-它就是 SQL 語言與 Ruby 語言的翻譯官
-CREATE  -  Order.create(name: "Bob", description: "hamburger")
-READ      -  讀取資料
-UPDATE - Order.find(1).update(description: "sandwich")
-DELETE  - Order.find(1).destroy
+config/routes.rb => 查看支援哪些功能(function)
+Gemfile => dependency  
+>Gemfile.lock:不要隨便動它。
+>>裝sqlite browser檢驗DB資料
 
-#rail console
-類似 irb，不過只屬於一個專案的環境
-可在裡面測試 ActiveRecord
-$rails console
-
-//裝sqlite browser
-
-class method => 整體 v.s instance method => 單一
+class method => 整體   
+instance method => 單一
 
 #提醒，git上傳
 縮排兩格，sublime=>space 2
@@ -85,132 +187,7 @@ class method => 整體 v.s instance method => 單一
 變數命名：instace var => @ 、class var => @@
 class是工廠
 
-----------------lec6------------------
-#[手動打造Action]
-1. 產生＆編輯 migration 檔案
-$rails generate migration add_users_table
-$rails g migration create_order
-2. 執行 rake db:migrate 改變資料庫
-3. 建立和該 table 相對應的 model 檔
-4. 寫出 Controller 檔案，宣告 action
-5. 在 routes.rb 裡設定路由
-6. 產生 view 所需要的 html.erb 檔案
 
-在rails中資料表名稱永遠是複數
-[migration]
-透過ruby去寫SQL語法，並創造資料表
-rake db:migrate 
-schema_mygration:記錄資料表版本創造時間，再次run rake db:migrate時什麼事情都不會發生(已經被記錄了)
-#可以把 migration 檔看成是 db schema 的版本控制
-activeRecord專門處理rails與資料表溝通
-schema.rb：所有migration檔案的加總
-
-# 記得做install budle
-資料表才會連結成功
-
-post創造資料
-new產生空表單，物件思考，後端產生空物件給前端填資料再傳到後端建立出來
-
-#Rails delete table
-rails g migration DropTablename
-
-migration檔輸入：
-  def up
-    drop_table :tablename
-  end
-
-rake db:migrate
-
-#檢查model檔案的方法
-$ rails console
-'datebase_name'.all
-
-
-#rails檔案命名的嚴謹性
-model命名方式一定要是單數，不能亂命名(物件觀念)
-tableize可以幫忙檢查
-ex "monkey".tableize
-
-#controllcer
-#view
-1.建立新資料夾，名稱為 'datebase_name'
-2.產生html.erb檔案，名稱為 'function_name'.html.erb
-
-[腳本語言]
-依序執行下來
-不像JAVA或是C
-
-db migrate ：
-
-#[DB]
-DB是網頁設計的基石
-DB Schema為資料庫藍圖
-
-#關聯
-＃一對多
-user <-> order(取得foreign_key:user.id)
-has_many <-> belongs_to :user
-
-＃多對多
-1.has_many :through
-By join table:記錄兩個table的多對多關係
-EX:doctor <-> appointment(join table) <-> patient
-has_many :appointments
-has_many :patients, through: :appointments
-<-> 
-belongs_to :physician
-belongs_to :patient
-<-> 
-has_many :appointments
-has_many :physicians, through: :appointments
-
-2.has_and_belongs_to_many
-join table model file(migration file)取名為：databestTable1_databestTable2
-model不需要另外有join table
-缺點：缺乏彈性，不能在放其他欄位資料
-
-rails 指令建立關係
-Physician.first.patients << Patient.first ('<<':array push) 
-
-#關聯驗證[相對單複數要注意]
-我可以透過 user 搜尋到 orders
-user.orders
-也可以透過 order 搜尋到 user
-order.user
-*其他寫法
-User.find(1).orders
-
-
-#Active Record Query Interface
-#all找尋全部資料
-'databaseTable_name'all
-# find 是透過資料的 id 搜尋
-user = User.find(1) #尋找 users 資料表裡 id 為 1 的 record
-資料表間關聯查詢
-#'One_databaseTable_name'.find(primary id).'Other_databaseTable_name'
-Example: User.find(4).orders
-# where 是透過給訂的條件搜尋
-result = User.where(name: "bob") # 會回傳一個有一或多筆 user 的陣列
-# ActiveRecord 會有內建的搜尋方法，find_by_
-bob = User.find_by_name("bob")
-find_by_ 只會回傳符合條件的第一筆資料，請小心使用
-
-#檢查資料庫資料
-gem 'awesome_print'
-$ bundle instal
-$ rails c
-ap 'datebase_name'.all
-
-#[功課]
-產生留言板migration file、model:association
-
-#問
-[debendo]
-[scaffold 指令] => 鷹架之一
-git commit -m "first commit" ， commit就是將某些檔案正式納入git監控，"first commit"
-為對這些監控檔案進行的描述訊息
-rails g scaffold order name:string phone:string description:text，
-這份order需要哪些欄位加以定義schema
 
 
 
