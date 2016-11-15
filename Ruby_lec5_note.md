@@ -19,16 +19,23 @@ arr = [1,2,3,3].uniq! #arr = [1,2,3]
 >清楚告訴使用者大概會回傳怎樣的值  
 >?回傳boolean;!代表值會改變
 
+#提醒，git上傳
+縮排兩格，sublime=>space 2  
+命名方式：蛇底式寫法  
+變數命名：  
+instace var => @  
+class var => @@  
+class是工廠
 
 ###MVC 架構
 1. Model 封裝資料與商業邏輯，與資料庫裡的資料表對應
 2. View 處理使用者介面，顯示及編輯表單，可內嵌Ruby語法
 3. Controller 負責將資料送進送出Model，處理從外界 (也就是瀏覽器) 來的HTTP Request請求，與Model互動後輸出View (也就是HTML)
 
-＃早期網頁都沒有JS，透過php夾雜在html裡頭去做邏輯判斷與資料庫連結
-＃rails的view特別之處在於能嵌入ruby程式碼
-＃桌機跟網路MVC差別，網頁不會自動跟新資料(http協定)
-＃後端(controller & model)
+＃早期網頁都沒有JS，透過php夾雜在html裡頭去做邏輯判斷與資料庫連結  
+＃rails的view特別之處在於能嵌入ruby程式碼  
+＃桌機跟網路MVC差別，網頁不會自動跟新資料(http協定)  
+＃後端(controller & model)  
 ＃controller決定要CRUD哪個動作，根據路由(Routing)規則決定派往哪一個Controller
  的 Action，類似於MEAN的app.js  
 
@@ -71,7 +78,7 @@ $rails g scaffold order name:string phone:string description:text
 >>>>觀念:
 >>>>>post跟new綁在一起  
 >>>>>edit跟update綁在一起     
-![Loading Fail](http://www.weijieworld.com/wp-content/uploads/2015/02/screen-shot-2015-02-24-at-4-02-00-pm.png"rails CRUD")
+![Loading Fail](http://www.weijieworld.com/wp-content/uploads/2015/02/screen-shot-2015-02-24-at-4-02-00-pm.png "rails CRUD")
 
 **rails routes URL 定義**  
 **route file**
@@ -91,8 +98,8 @@ end
 
 ＊取資料get 產生資料post
 
-**controller file**
-**controller功能**
+**controller file**  
+**controller功能**  
 1. 收集 http request 的資訊，例如:使用者傳進來的參數  
 2. 操作 Model 來做資料的處理  
 3. 回傳 response 結果  
@@ -116,9 +123,9 @@ end
 | UPDATE    |         編輯資料         |
 | DELETE    |         刪除資料         |
 
-CREATE  -  Order.create(name: "Bob", description: "hamburger")
-READ    -  讀取資料
-UPDATE  - Order.find(1).update(description: "sandwich")
+CREATE  -  Order.create(name: "Bob", description: "hamburger")  
+READ    -  Order.all 
+UPDATE  - Order.find(1).update(description: "sandwich")  
 DELETE  - Order.find(1).destroy
 
 **rail console**
@@ -153,10 +160,10 @@ end
 </tbody>
 ```
 
-$bundle install 
-=> 確保相關package安裝，並且不用再裝舊或新pcakage版本
-=> 類似MEAN的npm install
-gem.file 紀錄需要的package 類似node 的.json檔
+$bundle install  
+>確保相關package安裝，並且不用再裝舊或新pcakage版本  
+>類似MEAN的npm install  
+>gem.file 紀錄需要的package 類似node 的.json檔
 
 ###rails 專案建立步驟
 1. $rails new "my_app_name"  
@@ -181,11 +188,7 @@ Gemfile => dependency
 class method => 整體   
 instance method => 單一
 
-#提醒，git上傳
-縮排兩格，sublime=>space 2
-命名方式：蛇底式寫法
-變數命名：instace var => @ 、class var => @@
-class是工廠
+
 
 
 
